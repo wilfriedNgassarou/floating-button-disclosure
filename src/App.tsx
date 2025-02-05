@@ -1,4 +1,4 @@
-import { motion } from "motion/react"
+import { AnimatePresence, motion } from "motion/react"
 import { useState } from "react"
 import { BellFill, FileEarmarkFill, FileTextFill, FolderFill, Plus, X } from "react-bootstrap-icons"
 import { Credits } from "./components/credits"
@@ -32,31 +32,37 @@ function App() {
   return (
     <section className="w-full h-dvh flex flex-col justify-center items-center">
       <Credits />
-      {/* add button */}
+      {/* add button background */}
       {state == 'collapsed' && (
         <>
           <motion.div
             onClick={() => setState('extended')}
             layoutId="card" 
             style={{ borderRadius: 24 }}
-            className="w-24 h-12 bg-stone-300 relative z-10 flex items-center justify-center"
-          >
-            <motion.span
-              className="absolute" 
-              layout="position"
-            >
-              <Plus 
-                size={36} 
-                className="fill-stone-500" 
-              />
-            </motion.span>
-          </motion.div>
+            className="w-24 h-12 bg-stone-300 cursor-pointer relative z-10 flex items-center justify-center"
+          />
           <motion.div 
             layoutId="close-btn"
-            className="w-16 h-12 bg-stone-300 rounded-full -mt-12" 
+            className="w-16 h-12 bg-stone-300 border-2 border-stone-300 rounded-full -mt-12" 
           />
         </>
       )}
+
+      {/* add button icon  */}
+      <AnimatePresence>
+        {state == 'collapsed' && (
+          <motion.span
+            exit={{ opacity: 0 }}
+            onClick={() => setState('extended')}
+            className="absolute z-30 cursor-pointer"
+          >
+            <Plus 
+              size={36} 
+              className="fill-stone-500" 
+            />
+          </motion.span>
+        )}
+      </AnimatePresence>
       
       {/* menu  */}
       {state == 'extended' && (
@@ -64,7 +70,7 @@ function App() {
           <motion.div
             onClick={() => setState('collapsed')} 
             layoutId="close-btn"
-            className="w-16 h-12 flex justify-center items-center bg-stone-300 rounded-full mb-4" 
+            className="cursor-pointer w-16 h-12 flex justify-center items-center bg-stone-300 rounded-full mb-4" 
           >
             <X 
               size={36} 
@@ -74,7 +80,7 @@ function App() {
           <motion.div
             layoutId="card"
             style={{ borderRadius: 24 }}
-            className=" border-gray-700/5 shadow-md border-[1px] p-4 flex flex-col gap-5"
+            className="border-stone-300 shadow-md border-[1px] p-4 flex flex-col gap-5"
           >
             {items.map((item, index) => (
               <motion.div
