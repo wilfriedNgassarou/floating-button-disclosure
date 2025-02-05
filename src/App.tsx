@@ -1,6 +1,7 @@
 import { motion } from "motion/react"
 import { useState } from "react"
 import { BellFill, FileEarmarkFill, FileTextFill, FolderFill, Plus, X } from "react-bootstrap-icons"
+import { Credits } from "./components/credits"
 
 function App() {
   const [state, setState] = useState<'extended' | 'collapsed'>('collapsed')
@@ -30,6 +31,7 @@ function App() {
 
   return (
     <section className="w-full h-dvh flex flex-col justify-center items-center">
+      <Credits />
       {/* add button */}
       {state == 'collapsed' && (
         <>
